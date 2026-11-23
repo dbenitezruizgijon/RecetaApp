@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Todas las recetas - RecetApp</title>
+	<link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+	<nav class="barra">
+		<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+		<div class="menu">
+			<a th:href="@{/}">Inicio</a>
+			<a class="activo" th:href="@{/explorar}">Explorar</a>
+			<a th:href="@{/mundo}">Cocina del mundo</a>
+			<a th:href="@{/nueva-receta}">+ Añadir receta</a>
+			<a th:if="${session.usuario == null}" class="boton-barra" th:href="@{/login}">Iniciar sesión</a>
+			<div th:if="${session.usuario != null}" class="menu-usuario" tabindex="0">
+				<span class="usuario-boton">
+					<span class="inicial" th:text="${session.usuario.substring(0, 1).toUpperCase()}">D</span>
+					<span th:text="${session.usuario}">dani</span> ▾
+				</span>
+				<div class="desplegable">
+					<a th:href="@{/mis-recetas}">Mis recetas</a>
+					<a th:href="@{/planificador}">Planificador semanal</a>
+					<a th:href="@{/lista}">Lista de la compra</a>
+					<a class="salir" th:href="@{/salir}">Cerrar sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="cabecera-pagina">
+		<h1>Todas las recetas</h1>
+		<p><span th:text="${recetas.size()}">7</span> recetas encontradas</p>
+	</div>
+
+	<form class="filtros" th:action="@{/explorar}" method="get">
+		<input type="text" name="buscar" th:value="${buscar}" placeholder="Busca por ingrediente: huevo, queso...">
+
+		<select name="tipo">
+			<option value="">Todos los tipos</option>
+			<option value="Desayuno" th:selected="${tipo == 'Desayuno'}">Desayunos</option>
+			<option value="Plato principal" th:selected="${tipo == 'Plato principal'}">Platos principales</option>
+			<option value="Postre" th:selected="${tipo == 'Postre'}">Postres</option>
+		</select>
+
+		<select name="orden">
+			<option value="">Sin ordenar</option>
+			<option value="nombre" th:selected="${orden == 'nombre'}">Por nombre (A-Z)</option>
+			<option value="tiempo" th:selected="${orden == 'tiempo'}">Más rápidas primero</option>
+			<option value="calorias" th:selected="${orden == 'calorias'}">Más ligeras primero</option>
+		</select>
+
+		<button class="boton boton-pequeno" type="submit">Filtrar</button>
+		<a class="quitar-filtros" th:href="@{/explorar}">Quitar filtros</a>
+	</form>
+
+	<p class="sin-resultados" th:text="${mensaje}"></p>
+
+	<section class="rejilla">
+		<a class="receta" th:each="receta : ${recetas}" th:href="@{/receta(id=${receta.id})}">
+			<img src="../static/img/tortilla.jpg" th:src="@{'/img/' + ${receta.imagen}}" alt="Foto de la receta">
+			<p class="tipo" th:text="${receta.tipo}">Plato principal</p>
+			<h3 th:text="${receta.nombre}">Tortilla de patata</h3>
+			<p class="datos">
+				<span th:text="${receta.tiempoMinutos}">30</span> min ·
+				<span th:text="${receta.calorias}">800</span> kcal ·
+				de <span th:text="${receta.autor}">dani</span>
+			</p>
+		</a>
+	</section>
+
+	<footer class="pie">
+		<div class="pie-columnas">
+			<div class="pie-marca">
+				<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+				<p>Recetas caseras compartidas por gente como tú. Busca, cocina, planifica tu semana y haz la compra sin complicarte.</p>
+			</div>
+			<div>
+				<h4>Descubre</h4>
+				<a th:href="@{/explorar}">Todas las recetas</a>
+				<a th:href="@{/explorar(orden='tiempo')}">Recetas rápidas</a>
+				<a th:href="@{/mundo}">Cocina del mundo</a>
+				<a th:href="@{/sorprendeme}">Sorpréndeme</a>
+			</div>
+			<div>
+				<h4>Tu cocina</h4>
+				<a th:href="@{/nueva-receta}">Añadir receta</a>
+				<a th:href="@{/mis-recetas}">Mis recetas</a>
+				<a th:href="@{/planificador}">Planificador semanal</a>
+				<a th:href="@{/lista}">Lista de la compra</a>
+			</div>
+			<div>
+				<h4>El proyecto</h4>
+				<p>Optativa Spring Boot · 2º DAW</p>
+				<p>Hecho con Java, Spring Boot y Thymeleaf</p>
+				<p>Fotos de Unsplash y Pexels</p>
+			</div>
+		</div>
+		<p class="pie-final">© 2026 RecetApp · Proyecto educativo sin fines comerciales</p>
+	</footer>
+
+</body>
+</html>

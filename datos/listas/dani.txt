@@ -1,0 +1,18 @@
+aguacate;10
+tomate;3
+pimienta;1
+chorizo;4
+leche;4
+queso pecorino;1
+harina;4
+cebolla;6
+azucar;4
+lentejas;4
+patatas;16
+zanahoria;8
+huevos;23
+pan;6
+espaguetis;1
+guanciale;1
+sal;3
+aceite;2

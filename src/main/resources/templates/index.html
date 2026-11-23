@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>RecetApp - Recetas caseras para el día a día</title>
+	<link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+	<nav class="barra">
+		<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+		<div class="menu">
+			<a class="activo" th:href="@{/}">Inicio</a>
+			<a th:href="@{/explorar}">Explorar</a>
+			<a th:href="@{/mundo}">Cocina del mundo</a>
+			<a th:href="@{/nueva-receta}">+ Añadir receta</a>
+			<a th:if="${session.usuario == null}" class="boton-barra" th:href="@{/login}">Iniciar sesión</a>
+			<div th:if="${session.usuario != null}" class="menu-usuario" tabindex="0">
+				<span class="usuario-boton">
+					<span class="inicial" th:text="${session.usuario.substring(0, 1).toUpperCase()}">D</span>
+					<span th:text="${session.usuario}">dani</span> ▾
+				</span>
+				<div class="desplegable">
+					<a th:href="@{/mis-recetas}">Mis recetas</a>
+					<a th:href="@{/planificador}">Planificador semanal</a>
+					<a th:href="@{/lista}">Lista de la compra</a>
+					<a class="salir" th:href="@{/salir}">Cerrar sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<header class="portada">
+		<h1>Cocina sin complicarte</h1>
+		<p class="frase">Recetas caseras compartidas por gente como tú, listas para hacer hoy mismo</p>
+		<div class="contadores">
+			<div><span th:text="${numRecetas}">7</span> recetas</div>
+			<div><span th:text="${numCocineros}">3</span> cocineros</div>
+		</div>
+		<a class="boton" th:href="@{/explorar}">¡A cocinar!</a>
+	</header>
+
+	<section class="destacado">
+		<img src="../static/img/destacado.jpg" th:src="@{/img/destacado.jpg}" alt="Plato casero">
+		<div class="destacado-texto">
+			<h2>Una colección que no para de crecer</h2>
+			<p>
+				RecetApp reúne <strong><span th:text="${numRecetas}">7</span> recetas</strong> subidas por
+				<strong><span th:text="${numCocineros}">3</span> cocineros</strong>, desde
+				<strong>platos de toda la vida</strong> hasta <strong>postres para darse un capricho</strong>.
+				Cada usuario puede añadir las suyas y todos pueden probarlas en su cocina.
+			</p>
+			<p>
+				¿Te apetece algo diferente? En <strong>Cocina del mundo</strong> tienes platos típicos
+				de otros países para salir de la rutina sin complicarte.
+			</p>
+		</div>
+	</section>
+
+	<p class="lema">RECETAS SENCILLAS PARA EL <span class="manuscrita">día a día</span></p>
+
+	<section class="categorias">
+		<a class="categoria" th:href="@{/explorar(tipo='Desayuno')}">
+			<img src="../static/img/tortitas.jpg" th:src="@{/img/tortitas.jpg}" alt="Desayunos">
+			<span>DESAYUNOS</span>
+		</a>
+		<a class="categoria" th:href="@{/explorar(tipo='Plato principal')}">
+			<img src="../static/img/lentejas.jpg" th:src="@{/img/lentejas.jpg}" alt="Platos principales">
+			<span>PLATOS PRINCIPALES</span>
+		</a>
+		<a class="categoria" th:href="@{/explorar(tipo='Postre')}">
+			<img src="../static/img/tarta-queso.jpg" th:src="@{/img/tarta-queso.jpg}" alt="Postres">
+			<span>POSTRES</span>
+		</a>
+		<a class="categoria" th:href="@{/mundo}">
+			<img src="../static/img/mundo.jpg" th:src="@{/img/mundo.jpg}" alt="Cocina del mundo">
+			<span>COCINA DEL MUNDO</span>
+		</a>
+	</section>
+
+	<section class="circulos">
+		<a class="circulo" th:href="@{/explorar(orden='tiempo')}">
+			<img src="../static/img/tostadas.jpg" th:src="@{/img/tostadas.jpg}" alt="">
+			<span>RÁPIDAS</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='huevo')}">
+			<img src="../static/img/tortilla.jpg" th:src="@{/img/tortilla.jpg}" alt="">
+			<span>CON HUEVO</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='chorizo')}">
+			<img src="../static/img/macarrones.jpg" th:src="@{/img/macarrones.jpg}" alt="">
+			<span>CON CHORIZO</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='lentejas')}">
+			<img src="../static/img/lentejas.jpg" th:src="@{/img/lentejas.jpg}" alt="">
+			<span>DE CUCHARA</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='azucar')}">
+			<img src="../static/img/tortitas.jpg" th:src="@{/img/tortitas.jpg}" alt="">
+			<span>DULCES</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='queso')}">
+			<img src="../static/img/tarta-queso.jpg" th:src="@{/img/tarta-queso.jpg}" alt="">
+			<span>CON QUESO</span>
+		</a>
+		<a class="circulo" th:href="@{/explorar(buscar='leche')}">
+			<img src="../static/img/flan.jpg" th:src="@{/img/flan.jpg}" alt="">
+			<span>CON LECHE</span>
+		</a>
+		<a class="circulo" th:href="@{/mundo}">
+			<img src="../static/img/mundo.jpg" th:src="@{/img/mundo.jpg}" alt="">
+			<span>DEL MUNDO</span>
+		</a>
+	</section>
+
+	<form class="buscador" th:action="@{/explorar}" method="get">
+		<input type="text" name="buscar" placeholder="Busca por ingrediente: huevo, chorizo...">
+		<span class="manuscrita">o</span>
+		<a class="boton boton-pequeno" th:href="@{/explorar}">+ Ver todas las recetas</a>
+	</form>
+
+	<section class="seccion">
+		<p class="seccion-titulo">LO ÚLTIMO</p>
+
+		<a class="entrada" th:each="receta : ${ultimas}" th:href="@{/receta(id=${receta.id})}">
+			<img src="../static/img/tortilla.jpg" th:src="@{'/img/' + ${receta.imagen}}" alt="Foto de la receta">
+			<div>
+				<p class="meta">
+					<span th:text="${receta.tipo}">Plato principal</span> ·
+					<span th:text="${receta.tiempoMinutos}">30</span> min ·
+					de <span th:text="${receta.autor}">dani</span>
+				</p>
+				<h3 th:text="${receta.nombre}">Tortilla de patata</h3>
+				<p th:text="${receta.descripcion}">La de toda la vida, jugosa por dentro y con su cebolla.</p>
+				<p class="seguir">VER RECETA →</p>
+			</div>
+		</a>
+	</section>
+
+	<footer class="pie">
+		<div class="pie-columnas">
+			<div class="pie-marca">
+				<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+				<p>Recetas caseras compartidas por gente como tú. Busca, cocina, planifica tu semana y haz la compra sin complicarte.</p>
+			</div>
+			<div>
+				<h4>Descubre</h4>
+				<a th:href="@{/explorar}">Todas las recetas</a>
+				<a th:href="@{/explorar(orden='tiempo')}">Recetas rápidas</a>
+				<a th:href="@{/mundo}">Cocina del mundo</a>
+				<a th:href="@{/sorprendeme}">Sorpréndeme</a>
+			</div>
+			<div>
+				<h4>Tu cocina</h4>
+				<a th:href="@{/nueva-receta}">Añadir receta</a>
+				<a th:href="@{/mis-recetas}">Mis recetas</a>
+				<a th:href="@{/planificador}">Planificador semanal</a>
+				<a th:href="@{/lista}">Lista de la compra</a>
+			</div>
+			<div>
+				<h4>El proyecto</h4>
+				<p>Optativa Spring Boot · 2º DAW</p>
+				<p>Hecho con Java, Spring Boot y Thymeleaf</p>
+				<p>Fotos de Unsplash y Pexels</p>
+			</div>
+		</div>
+		<p class="pie-final">© 2026 RecetApp · Proyecto educativo sin fines comerciales</p>
+	</footer>
+
+</body>
+</html>

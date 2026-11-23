@@ -1,0 +1,8 @@
+España;Tortilla de patata;Paella valenciana;Gazpacho;Salmorejo;Cocido madrileño;Pulpo a la gallega;Churros con chocolate
+Francia;Croissant;Crêpes;Tortilla francesa;Ratatouille;Quiche lorraine;Crème brûlée;Sopa de cebolla
+Italia;Pizza margarita;Lasaña;Risotto;Espaguetis a la carbonara;Tiramisú;Ossobuco;Panna cotta
+México;Tacos al pastor;Guacamole;Enchiladas;Chilaquiles;Pozole;Quesadillas;Tamales
+Japón;Sushi;Ramen;Tempura;Okonomiyaki;Gyozas;Takoyaki;Mochi
+India;Pollo tikka masala;Biryani;Dal;Samosas;Pan naan;Palak paneer;Lassi de mango
+Estados Unidos;Hamburguesa;Tortitas americanas;Macarrones con queso;Costillas barbacoa;Perrito caliente;Brownie;Tarta de manzana
+Marruecos;Cuscús;Tajín de pollo;Harira;Pastela;Briouats;Té con menta;Chebakia

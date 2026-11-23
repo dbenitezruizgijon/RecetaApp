@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${receta.nombre} + ' - RecetApp'">Receta - RecetApp</title>
+	<link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+	<nav class="barra">
+		<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+		<div class="menu">
+			<a th:href="@{/}">Inicio</a>
+			<a class="activo" th:href="@{/explorar}">Explorar</a>
+			<a th:href="@{/mundo}">Cocina del mundo</a>
+			<a th:href="@{/nueva-receta}">+ Añadir receta</a>
+			<a th:if="${session.usuario == null}" class="boton-barra" th:href="@{/login}">Iniciar sesión</a>
+			<div th:if="${session.usuario != null}" class="menu-usuario" tabindex="0">
+				<span class="usuario-boton">
+					<span class="inicial" th:text="${session.usuario.substring(0, 1).toUpperCase()}">D</span>
+					<span th:text="${session.usuario}">dani</span> ▾
+				</span>
+				<div class="desplegable">
+					<a th:href="@{/mis-recetas}">Mis recetas</a>
+					<a th:href="@{/planificador}">Planificador semanal</a>
+					<a th:href="@{/lista}">Lista de la compra</a>
+					<a class="salir" th:href="@{/salir}">Cerrar sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="pagina-receta" th:object="${receta}">
+
+		<main class="receta-principal">
+
+			<p class="migas">
+				<a th:href="@{/explorar}">Recetas</a> › <span th:text="*{tipo}">Plato principal</span>
+			</p>
+
+			<h1 class="receta-titulo" th:text="*{nombre}">Tortilla de patata</h1>
+
+			<p class="receta-datos">
+				<span th:text="*{tiempoMinutos}">30</span> MIN ·
+				<span th:text="*{calorias}">800</span> KCAL ·
+				<span th:text="*{detalleExtra}">4 raciones</span>
+			</p>
+
+			<p class="receta-entradilla" th:text="*{descripcion}">La de toda la vida, jugosa por dentro y con su cebolla.</p>
+
+			<p class="publicado">
+				<span class="mini-avatar" th:text="*{inicialAutor}">D</span>
+				Publicado por <strong th:text="*{autor}">dani</strong>
+				· <span th:text="*{origen}">Cocina de España</span>
+			</p>
+
+			<a class="ir-receta" href="#tarjeta">↓ IR A LA RECETA</a>
+
+			<img class="receta-foto" src="../static/img/tortilla.jpg" th:src="@{'/img/' + *{imagen}}" alt="Foto de la receta">
+
+			<section class="tarjeta-receta" id="tarjeta">
+				<div class="tarjeta-cabecera">
+					<img src="../static/img/tortilla.jpg" th:src="@{'/img/' + *{imagen}}" alt="">
+					<div>
+						<p class="etiqueta-tipo" th:text="*{tipo}">Plato principal</p>
+						<h2 th:text="*{nombre}">Tortilla de patata</h2>
+						<p class="autor-tarjeta">de <span th:text="*{autor}">dani</span></p>
+					</div>
+				</div>
+
+				<div class="tarjeta-numeros">
+					<div><span>Tiempo</span><strong th:text="*{tiempoMinutos} + ' min'">30 min</strong></div>
+					<div><span>Calorías</span><strong th:text="*{calorias} + ' kcal'">800 kcal</strong></div>
+					<div><span th:text="*{tipo}">Plato principal</span><strong th:text="*{detalleExtra}">4 raciones</strong></div>
+				</div>
+
+				<h3>Ingredientes</h3>
+				<ul class="ingredientes">
+					<li th:each="ingrediente : *{ingredientes}">
+						<strong th:text="${ingrediente.cantidad}">6</strong>
+						<span th:text="${ingrediente.nombre}">huevos</span>
+					</li>
+				</ul>
+
+				<h3>Preparación</h3>
+				<ol class="pasos">
+					<li th:each="paso : *{pasosLista}" th:text="${paso}">Pelar y cortar las patatas.</li>
+				</ol>
+			</section>
+		</main>
+
+		<aside class="receta-lateral">
+			<div class="caja-autor">
+				<span class="avatar" th:text="*{inicialAutor}">D</span>
+				<p class="hola">¡HOLA! SOY <span th:text="*{autor}">dani</span></p>
+				<p class="manuscrita">encantado de cocinar contigo</p>
+				<p class="texto-autor">
+					He compartido <strong th:text="${recetasAutor}">3</strong> recetas en RecetApp.
+					Échales un ojo y cuéntame qué tal te salen.
+				</p>
+				<a class="enlace-autor" th:href="@{/explorar}">VER TODAS LAS RECETAS</a>
+			</div>
+		</aside>
+	</div>
+
+	<footer class="pie">
+		<div class="pie-columnas">
+			<div class="pie-marca">
+				<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+				<p>Recetas caseras compartidas por gente como tú. Busca, cocina, planifica tu semana y haz la compra sin complicarte.</p>
+			</div>
+			<div>
+				<h4>Descubre</h4>
+				<a th:href="@{/explorar}">Todas las recetas</a>
+				<a th:href="@{/explorar(orden='tiempo')}">Recetas rápidas</a>
+				<a th:href="@{/mundo}">Cocina del mundo</a>
+				<a th:href="@{/sorprendeme}">Sorpréndeme</a>
+			</div>
+			<div>
+				<h4>Tu cocina</h4>
+				<a th:href="@{/nueva-receta}">Añadir receta</a>
+				<a th:href="@{/mis-recetas}">Mis recetas</a>
+				<a th:href="@{/planificador}">Planificador semanal</a>
+				<a th:href="@{/lista}">Lista de la compra</a>
+			</div>
+			<div>
+				<h4>El proyecto</h4>
+				<p>Optativa Spring Boot · 2º DAW</p>
+				<p>Hecho con Java, Spring Boot y Thymeleaf</p>
+				<p>Fotos de Unsplash y Pexels</p>
+			</div>
+		</div>
+		<p class="pie-final">© 2026 RecetApp · Proyecto educativo sin fines comerciales</p>
+	</footer>
+
+</body>
+</html>

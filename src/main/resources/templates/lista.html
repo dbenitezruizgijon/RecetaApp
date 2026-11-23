@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lista de la compra - RecetApp</title>
+	<link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+	<nav class="barra">
+		<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+		<div class="menu">
+			<a th:href="@{/}">Inicio</a>
+			<a th:href="@{/explorar}">Explorar</a>
+			<a th:href="@{/mundo}">Cocina del mundo</a>
+			<a th:href="@{/nueva-receta}">+ Añadir receta</a>
+			<a th:if="${session.usuario == null}" class="boton-barra" th:href="@{/login}">Iniciar sesión</a>
+			<div th:if="${session.usuario != null}" class="menu-usuario" tabindex="0">
+				<span class="usuario-boton">
+					<span class="inicial" th:text="${session.usuario.substring(0, 1).toUpperCase()}">D</span>
+					<span th:text="${session.usuario}">dani</span> ▾
+				</span>
+				<div class="desplegable">
+					<a th:href="@{/mis-recetas}">Mis recetas</a>
+					<a th:href="@{/planificador}">Planificador semanal</a>
+					<a th:href="@{/lista}">Lista de la compra</a>
+					<a class="salir" th:href="@{/salir}">Cerrar sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="cabecera-pagina">
+		<h1>Lista de la compra</h1>
+		<p>Se guarda sola cada vez que la cambias</p>
+	</div>
+
+	<p class="sorpresa" th:text="${mensaje}"></p>
+
+	<form class="filtros" th:action="@{/lista/anadir}" method="post">
+		<input type="text" name="producto" placeholder="Producto: leche, pan..." required>
+		<input class="campo-cantidad" type="number" name="cantidad" value="1" min="1" required>
+		<button class="boton boton-pequeno" type="submit">Añadir</button>
+	</form>
+
+	<section class="seccion caja-lista">
+		<p class="sin-resultados" th:text="${vacia}"></p>
+
+		<ul class="lista-compra">
+			<li th:each="item : ${lista}">
+				<span class="cantidad" th:text="${item.value}">6</span>
+				<span class="producto" th:text="${item.key}">huevos</span>
+				<form th:action="@{/lista/quitar}" method="post">
+					<input type="hidden" name="producto" th:value="${item.key}">
+					<button class="quitar" type="submit" title="Quitar de la lista">✕</button>
+				</form>
+			</li>
+		</ul>
+
+		<div class="acciones-plan">
+			<form th:action="@{/lista/generar}" method="post">
+				<button class="boton boton-pequeno boton-mostaza" type="submit">Añadir ingredientes del plan</button>
+			</form>
+			<form th:action="@{/lista/vaciar}" method="post">
+				<button class="boton-borrar" type="submit">Vaciar lista</button>
+			</form>
+		</div>
+	</section>
+
+	<footer class="pie">
+		<div class="pie-columnas">
+			<div class="pie-marca">
+				<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+				<p>Recetas caseras compartidas por gente como tú. Busca, cocina, planifica tu semana y haz la compra sin complicarte.</p>
+			</div>
+			<div>
+				<h4>Descubre</h4>
+				<a th:href="@{/explorar}">Todas las recetas</a>
+				<a th:href="@{/explorar(orden='tiempo')}">Recetas rápidas</a>
+				<a th:href="@{/mundo}">Cocina del mundo</a>
+				<a th:href="@{/sorprendeme}">Sorpréndeme</a>
+			</div>
+			<div>
+				<h4>Tu cocina</h4>
+				<a th:href="@{/nueva-receta}">Añadir receta</a>
+				<a th:href="@{/mis-recetas}">Mis recetas</a>
+				<a th:href="@{/planificador}">Planificador semanal</a>
+				<a th:href="@{/lista}">Lista de la compra</a>
+			</div>
+			<div>
+				<h4>El proyecto</h4>
+				<p>Optativa Spring Boot · 2º DAW</p>
+				<p>Hecho con Java, Spring Boot y Thymeleaf</p>
+				<p>Fotos de Unsplash y Pexels</p>
+			</div>
+		</div>
+		<p class="pie-final">© 2026 RecetApp · Proyecto educativo sin fines comerciales</p>
+	</footer>
+
+</body>
+</html>

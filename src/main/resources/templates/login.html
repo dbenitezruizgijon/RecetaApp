@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Iniciar sesión - RecetApp</title>
+	<link rel="stylesheet" href="../static/css/estilos.css" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+	<nav class="barra">
+		<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+		<div class="menu">
+			<a th:href="@{/}">Inicio</a>
+			<a th:href="@{/explorar}">Explorar</a>
+			<a th:href="@{/mundo}">Cocina del mundo</a>
+			<a th:href="@{/nueva-receta}">+ Añadir receta</a>
+			<a th:if="${session.usuario == null}" class="boton-barra" th:href="@{/login}">Iniciar sesión</a>
+			<div th:if="${session.usuario != null}" class="menu-usuario" tabindex="0">
+				<span class="usuario-boton">
+					<span class="inicial" th:text="${session.usuario.substring(0, 1).toUpperCase()}">D</span>
+					<span th:text="${session.usuario}">dani</span> ▾
+				</span>
+				<div class="desplegable">
+					<a th:href="@{/mis-recetas}">Mis recetas</a>
+					<a th:href="@{/planificador}">Planificador semanal</a>
+					<a th:href="@{/lista}">Lista de la compra</a>
+					<a class="salir" th:href="@{/salir}">Cerrar sesión</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<main class="pagina-formulario">
+		<form class="caja-formulario" th:action="@{/login}" method="post">
+			<h1>Iniciar sesión</h1>
+			<p class="subtitulo-formulario">Entra para añadir tus recetas y guardar tu plan de la semana.</p>
+
+			<p class="error" th:text="${error}"></p>
+
+			<label for="nombre">Usuario</label>
+			<input type="text" id="nombre" name="nombre" th:value="${nombreRecordado}" required>
+
+			<label for="contrasena">Contraseña</label>
+			<input type="password" id="contrasena" name="contrasena" required>
+
+			<label class="casilla">
+				<input type="checkbox" name="recordar" value="si"> Recordar mi nombre
+			</label>
+
+			<button class="boton boton-ancho" type="submit">Entrar</button>
+
+			<p class="cambiar-formulario">¿No tienes cuenta? <a th:href="@{/registro}">Regístrate</a></p>
+
+			<a class="invitado" th:href="@{/explorar}">Continuar como invitado →</a>
+		</form>
+	</main>
+
+	<footer class="pie">
+		<div class="pie-columnas">
+			<div class="pie-marca">
+				<a class="logo" th:href="@{/}">Recet<span>App</span></a>
+				<p>Recetas caseras compartidas por gente como tú. Busca, cocina, planifica tu semana y haz la compra sin complicarte.</p>
+			</div>
+			<div>
+				<h4>Descubre</h4>
+				<a th:href="@{/explorar}">Todas las recetas</a>
+				<a th:href="@{/explorar(orden='tiempo')}">Recetas rápidas</a>
+				<a th:href="@{/mundo}">Cocina del mundo</a>
+				<a th:href="@{/sorprendeme}">Sorpréndeme</a>
+			</div>
+			<div>
+				<h4>Tu cocina</h4>
+				<a th:href="@{/nueva-receta}">Añadir receta</a>
+				<a th:href="@{/mis-recetas}">Mis recetas</a>
+				<a th:href="@{/planificador}">Planificador semanal</a>
+				<a th:href="@{/lista}">Lista de la compra</a>
+			</div>
+			<div>
+				<h4>El proyecto</h4>
+				<p>Optativa Spring Boot · 2º DAW</p>
+				<p>Hecho con Java, Spring Boot y Thymeleaf</p>
+				<p>Fotos de Unsplash y Pexels</p>
+			</div>
+		</div>
+		<p class="pie-final">© 2026 RecetApp · Proyecto educativo sin fines comerciales</p>
+	</footer>
+
+</body>
+</html>
